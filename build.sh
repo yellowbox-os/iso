@@ -60,7 +60,8 @@ pacstrap -c $CHROOT_DIR base base-devel linux-lts zsh mkinitcpio-archiso sudo gi
   xorg-server xorg-xinit xf86-input-libinput xf86-video-intel xf86-video-amdgpu xf86-video-nouveau \
   xfce4-panel xfce4-session xfwm4 xfce4-settings xfdesktop xfce4-terminal xfce4-clipman-plugin neofetch \
   networkmanager network-manager-applet nm-connection-editor net-tools wireless_tools wpa_supplicant \
-  gtk2 glib2 gtk-chtheme meson ninja
+  gtk2 glib2 gtk-chtheme meson ninja vala glib2-devel gobject-introspection libdbusmenu-gtk2 appmenu-gtk-module \
+  chromium sddm
 
 # Copy overlay files for new settings
 # cp -R overlays/etc/skel/.* "$CHROOT_DIR/etc/skel/"
@@ -122,9 +123,8 @@ echo "Installing vala-panel-appmenu..."
 systemd-nspawn -D "$CHROOT_DIR" \
     bash -c "git clone https://github.com/rilian-la-te/vala-panel-appmenu.git &&
              cd vala-panel-appmenu &&
-             mkdir build &&
              meson -Dxfce=enabled --prefix=/usr Build
-             cd build && ninja && ninja install"
+             cd Build && ninja && ninja install"
 
 # Install XNUfont
 echo "Installing XNUfont..."
@@ -153,7 +153,8 @@ echo "Cleanup git repos..."
 systemd-nspawn -D "$CHROOT_DIR" \
     bash -c "rm -rf /xnufont
              rm -rf /yellowbox-src
-             rm -rf /Mac-OS-9-Classic-XFCEfixes"
+             rm -rf /Mac-OS-9-Classic-XFCEfixes
+             rm -rf /vala-panel-appmenu"
 
 # Enter chroot environment and configure system
 echo "Entering chroot environment with systemd-nspawn..."
@@ -168,7 +169,28 @@ systemd-nspawn -D "$CHROOT_DIR" \
 # Enable services
 echo "Enabling services in chroot environment with systemd-nspawn..."
 systemd-nspawn -D "$CHROOT_DIR" \
-    bash -c "systemctl enable NetworkManager"
+    bash -c "systemctl enable NetworkManager
+             systemctl enable sddm"
+
+# Create XDG session for YellowBox
+echo "Create XDG session..."
+cat > "$CHROOT_DIR/usr/share/xsessions/yellowbox.desktop" <<EOF
+[Desktop Entry]
+Name=YellowBox
+Comment=This session logs you into YellowBox
+Exec=/System/Library/Scripts/YellowBox-X11
+TryExec=/System/Library/Scripts/YellowBox-X11
+Type=Application
+EOF
+
+# Configure SDDM autologin for YellowBox
+echo "Configure SDDM autologin..."
+mkdir "$CHROOT_DIR/etc/sddm.conf.d"
+cat > "$CHROOT_DIR/etc/sddm.conf.d/autologin.conf" <<EOF
+[Autologin]
+User=hexley
+Session=yellowbox
+EOF
 
 # Recreate linux-lts.preset for archiso.conf
 echo "Recreating linux-lts.preset"
