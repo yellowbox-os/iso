@@ -58,13 +58,14 @@ pacstrap -c $CHROOT_DIR base base-devel linux-lts zsh mkinitcpio-archiso sudo gi
   gcc-objc clang libjpeg-turbo libtiff libpng libicns imagemagick libxml2 libxslt gnutls libffi \
   icu cairo libxft avahi flite libxt portaudio make cmake openssl freeglut giflib libao \
   xorg-server xorg-xinit xf86-input-libinput xf86-video-intel xf86-video-amdgpu xf86-video-nouveau \
-  xfce4-panel xfce4-session xfwm4 xfce4-settings xfdesktop xfce4-terminal xfce4-clipman-plugin neofetch \
+  xfce4-panel xfce4-session xfwm4 xfce4-settings xfce4-terminal xfce4-clipman-plugin neofetch \
   networkmanager network-manager-applet nm-connection-editor net-tools wireless_tools wpa_supplicant \
   gtk2 glib2 gtk-chtheme meson ninja vala glib2-devel gobject-introspection libdbusmenu-gtk2 appmenu-gtk-module \
   chromium sddm
 
 # Copy overlay files for new settings
 # cp -R overlays/etc/skel/.* "$CHROOT_DIR/etc/skel/"
+echo "Enabling services in chroot environment with systemd-nspawn..."
 
 # Setup .zshrc for Users
 cat > "$CHROOT_DIR/etc/skel/.zshrc" <<EOF
