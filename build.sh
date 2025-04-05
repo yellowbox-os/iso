@@ -145,15 +145,26 @@ systemd-nspawn -D "$CHROOT_DIR" \
 # Install classic theme for XFCE
 echo "Installing classic theme for XFCE.."
 systemd-nspawn -D "$CHROOT_DIR" \
-    bash -c "git clone https://github.com/B00merang-Project/macOS.git
-    mv macOS /usr/share/themes"
+    bash -c "git clone https://github.com/markyb86/Mac-OS-9-Classic-XFCEfixes.git
+    mv Mac-OS-9-Classic-XFCEfixes /usr/share/themes"
+
+# Grab platinum 9 for fonts and wallpapers
+echo "Installing Platinum9 fonts and wallpapers.."
+systemd-nspawn -D "$CHROOT_DIR" \
+    bash -c "git clone https://github.com/grassmunk/Platinum9.git
+    mv /Platinum9/Charcoal.ttf /usr/share/fonts
+    mv /Platinum9/MONACO.TTF /usr/share/fonts
+    mv Mac-OS-9-Classic-XFCEfixes /usr/share/themes
+    mkdir -p /System/Library/Desktop\ Pictures
+    mv /Platinum9/OS9-wallpaper/* /System/Library/Desktop\ Pictures/"
 
 # Cleanup git repos
 echo "Cleanup git repos..."
 systemd-nspawn -D "$CHROOT_DIR" \
     bash -c "rm -rf /xnufont
              rm -rf /yellowbox-src
-             rm -rf /macOS
+             rm -rf /Mac-OS-9-Classic-XFCEfixes.git
+             rm -rf /Platinum9
              rm -rf /vala-panel-appmenu"
 
 # Enter chroot environment and configure system
