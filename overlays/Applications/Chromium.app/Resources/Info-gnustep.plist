@@ -1,0 +1,26 @@
+{
+  NSExecutable = "Chromium";
+  NSRole = "Viewer";
+  NSIcon = "Chromium.png";
+	XAppWrapper = YES;
+   CFBundleURLTypes = (
+  	{
+		CFBundleURLName = "Web site URL";
+		CFBundleURLSchemes = (
+		    http,
+		   https
+	    );
+	}
+  );
+  NSTypes = (
+    {
+      NSUnixExtensions = ( "html" );
+      NSIcon = "FileIcon_.html.tiff";
+    },
+    {
+      NSUnixExtensions = ( "htm" );
+      NSIcon = "FileIcon_.html.tiff";
+    }
+  );
+
+}
