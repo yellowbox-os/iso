@@ -64,8 +64,7 @@ pacstrap -c $CHROOT_DIR base base-devel linux-lts zsh mkinitcpio-archiso sudo gi
   chromium sddm
 
 # Copy overlay files for new settings
-# cp -R overlays/etc/skel/.* "$CHROOT_DIR/etc/skel/"
-echo "Enabling services in chroot environment with systemd-nspawn..."
+cp -R overlays/etc/skel/.* "$CHROOT_DIR/etc/skel/"
 
 # Setup .zshrc for Users
 cat > "$CHROOT_DIR/etc/skel/.zshrc" <<EOF
@@ -146,15 +145,15 @@ systemd-nspawn -D "$CHROOT_DIR" \
 # Install classic theme for XFCE
 echo "Installing classic theme for XFCE.."
 systemd-nspawn -D "$CHROOT_DIR" \
-    bash -c "git clone https://github.com/markyb86/Mac-OS-9-Classic-XFCEfixes.git
-    mv Mac-OS-9-Classic-XFCEfixes /usr/share/themes"
+    bash -c "git clone https://github.com/B00merang-Project/macOS.git
+    mv macOS /usr/share/themes"
 
 # Cleanup git repos
 echo "Cleanup git repos..."
 systemd-nspawn -D "$CHROOT_DIR" \
     bash -c "rm -rf /xnufont
              rm -rf /yellowbox-src
-             rm -rf /Mac-OS-9-Classic-XFCEfixes
+             rm -rf /macOS
              rm -rf /vala-panel-appmenu"
 
 # Enter chroot environment and configure system
