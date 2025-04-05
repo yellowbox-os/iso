@@ -87,6 +87,19 @@ unsetopt NULL_GLOB
 neofetch --ascii_distro macos --disable packages
 EOF
 
+# Setup GTK 2.0 for users
+cat > "$CHROOT_DIR/etc/gtk-2.0/gtkrc" <<EOF
+export GTK_MODULES=appmenu-gtk-module
+gtk-theme-name=Mac-OS-9-Classic-XFCEfixes
+EOF
+
+# Setup GTK3 for users
+cat > "$CHROOT_DIR/etc/gtk-3.0/settings.ini" <<EOF
+[Settings]
+gtk-theme-name = Mac-OS-9-Classic-XFCEfixes
+gtk-modules = appmenu-gtk-module
+EOF
+
 # Create a user account
 echo "Creating hexley user account for live system"
 systemd-nspawn -D "$CHROOT_DIR" \
