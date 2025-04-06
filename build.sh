@@ -64,7 +64,7 @@ pacstrap -c $CHROOT_DIR base base-devel linux-lts zsh mkinitcpio-archiso sudo gi
   chromium sddm scrot ffmpeg
 
 # Copy overlay files for new settings
-cp -R overlays/etc/skel/.* "$CHROOT_DIR/etc/skel/"
+cp -R overlays/* "$CHROOT_DIR/etc/skel/"
 
 # Setup .zshrc for Users
 cat > "$CHROOT_DIR/etc/skel/.zshrc" <<EOF
