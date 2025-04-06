@@ -12,6 +12,16 @@
       <property name="position-locked" type="bool" value="true"/>
       <property name="icon-size" type="uint" value="16"/>
       <property name="size" type="uint" value="20"/>
+      <property name="background-style" type="uint" value="1"/>
+      <property name="background-rgba" type="array">
+        <value type="double" value="1"/>
+        <value type="double" value="1"/>
+        <value type="double" value="1"/>
+        <value type="double" value="1"/>
+      </property>
+      <property name="plugin-ids" type="array">
+        <value type="int" value="3"/>
+      </property>
     </property>
     <property name="panel-2" type="empty">
       <property name="autohide-behavior" type="uint" value="1"/>
@@ -27,7 +37,14 @@
   <property name="plugins" type="empty">
     <property name="plugin-1" type="string" value="tasklist">
       <property name="show-labels" type="bool" value="false"/>
-      <property name="show-only-minimized" type="bool" value="true"/>
+      <property name="show-only-minimized" type="bool" value="false"/>
+    </property>
+    <property name="plugin-3" type="string" value="appmenu">
+      <property name="plugins" type="empty">
+        <property name="plugin-3" type="empty">
+          <property name="expand" type="bool" value="true"/>
+        </property>
+      </property>
     </property>
   </property>
 </channel>
