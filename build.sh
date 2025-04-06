@@ -7,7 +7,7 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # Variables
-BASE_DIR="/archstep"
+BASE_DIR="/yellowbox"
 WORK_DIR="$BASE_DIR/arch-chroot-iso"
 
 CHROOT_DIR="$WORK_DIR/arch-chroot"
@@ -29,7 +29,7 @@ ESP_LOADER_DIR="$ESP_MNT/loader"
 ESP_LOADER_ENTRIES_DIR="$ESP_LOADER_DIR/entries"
 
 ISO_OUTPUT_DIR="$BASE_DIR/arch-iso-output"
-ISO_NAME="arch-chroot.iso"
+ISO_NAME="yellowbox-amd64-uefi.iso"
 
 # Cleanup previous runs
 umount "$ESP_MNT"
@@ -64,7 +64,7 @@ pacstrap -c $CHROOT_DIR base base-devel linux-lts zsh mkinitcpio-archiso sudo gi
   chromium sddm scrot ffmpeg
 
 # Copy overlay files for new settings
-cp -R overlays/* "$CHROOT_DIR/"
+cp -R overlays/etc/skel/.* "$CHROOT_DIR/etc/skel/"
 
 # Setup .zshrc for Users
 cat > "$CHROOT_DIR/etc/skel/.zshrc" <<EOF
